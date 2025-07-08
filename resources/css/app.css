@@ -9,3 +9,31 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+.bg-teal-gradient {
+    background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+}
+
+.shadow-card {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.icon-card {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+}
+
+.help-card-blue {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.help-card-yellow {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+}
+
+.help-card-red {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.map-bg {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
