@@ -19,7 +19,7 @@
         <div class="relative min-h-screen flex flex-col items-center justify-center p-4 z-10">
             <div class="w-full max-w-2xl mx-auto bg-white/60 backdrop-blur-xl p-8 sm:p-10 rounded-2xl shadow-lg text-center">
                 <h1 class="text-4xl sm:text-5xl font-bold text-gray-900">
-                    Dr. Ed's Community Corps
+                    {{ config('app.name') }}
                 </h1>
                 <p class="mt-4 text-lg text-neutral-slate">
                     A compassion-centered platform to connect helpers with those in need.
@@ -31,7 +31,7 @@
                     Go to Your Dashboard
                     </a>
                     @else
-                    <a href="#"
+                    <a wire:navigate href="{{ route('login') }}"
                         class="inline-block rounded-md bg-brand-green px-8 py-4 text-lg font-semibold text-white shadow-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-opacity duration-200">
                     Login to Get Started
                     </a>

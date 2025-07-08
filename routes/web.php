@@ -1,25 +1,21 @@
 <?php
 
 use App\Livewire\Home;
+use App\Livewire\Auth\Login;
+use App\Livewire\Auth\Register;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LogoutController;
 
 Route::view('/', 'welcome')->name('welcome');
-Route::get('home', Home::class)->name('home');
 
-Route::get('login', function () {
-    return view('auth.login');
-})->name('login');
+Route::middleware('auth')->group(function(){
+    Route::get('dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::post('logout', LogoutController::class)->name('logout');
+});
 
 
-Route::get('register', function () {
-    return view('auth.register');
-})->name('register');
-
-Route::post('logout', function () {
-    auth()->logout();
-    return redirect()->route('welcome');
-})->name('logout');
-
-Route::get('dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('login', Login::class)->name('login');
+Route::get('register', Register::class)->name('register');
