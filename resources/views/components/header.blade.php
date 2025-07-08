@@ -1,20 +1,60 @@
 <div>
-    <div class="p-8 pb-6">
-        <div class="flex justify-between items-start mb-4">
-            <div>
-                <h1 class="text-5xl font-bold text-gray-900 mb-3">Medi-Cal</h1>
-                <div class="flex items-center gap-2">
-                    <div class="w-6 h-6 bg-teal-500 rounded-full flex items-center justify-center">
-                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
+    <!-- Navigation Header -->
+    <nav class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <h1 class="text-xl font-bold text-brand-green">{{ config('app.name') }}</h1>
                     </div>
-                    <span class="text-gray-600 text-lg font-medium">California Medicaid</span>
+                </div>
+                <div class="flex items-center">
+                    <!-- User Dropdown Menu -->
+                    <div x-data="{ open: false }" class="relative ml-3">
+                        <div>
+                            <button @click="open = !open" type="button" class="flex items-center max-w-xs bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-green" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="h-8 w-8 rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&color=059669&background=EBF4FF" alt="User Avatar">
+                                <span class="hidden sm:block ml-2 mr-3 text-sm font-medium text-gray-700">{{ Auth::user()->name }}</span>
+                                <svg class="hidden sm:block h-5 w-5 text-gray-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                        <!-- Dropdown Panel -->
+                        <div 
+                            x-show="open" 
+                            @click.away="open = false" 
+                            x-transition:enter="transition ease-out duration-100" 
+                            x-transition:enter-start="transform opacity-0 scale-95" 
+                            x-transition:enter-end="transform opacity-100 scale-100" 
+                            x-transition:leave="transition ease-in duration-75" 
+                            x-transition:leave-start="transform opacity-100 scale-100" 
+                            x-transition:leave-end="transform opacity-0 scale-95" 
+                            class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" 
+                            role="menu" 
+                            aria-orientation="vertical" 
+                            aria-labelledby="user-menu-button" 
+                            tabindex="-1"
+                            style="display: none;"
+                            >
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                            <!-- Logout Form -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a href="{{ route('logout') }}" 
+                                    onclick="event.preventDefault(); this.closest('form').submit();" 
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                                    role="menuitem" 
+                                    tabindex="-1" 
+                                    id="user-menu-item-1">
+                                Log Out
+                                </a>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold text-lg shadow-lg transition-colors">
-                Apply
-            </button>
         </div>
-    </div>
+    </nav>
 </div>

@@ -10,24 +10,27 @@ use Illuminate\Validation\ValidationException;
 
 class LoginForm extends Form
 {
-    #[Validate('required')]
+    #[Validate('required|email')]
     public string $email = '';
 
     #[Validate('required')]
     public string $password = '';
 
-    #[Validate('nullable')]
-    public $remember = '';
+    #[Validate('boolean')]
+    public bool $remember = false;
     
     public function store(){
         $this->validate();
 
-        if (Auth::attempt($this->validate())) {
-            return to_route('dashboard');
+        if (!Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+            // If authentication fails, throw an exception.
+            throw ValidationException::withMessages([
+                'form.email' => 'The provided credentials do not match our records.',
+            ]);
         }
+        
+        request()->session()->regenerate();
 
-        throw ValidationException::withMessages([
-            'email' => 'The provided credentials do not match our records'
-        ]);
+        return redirect()->intended(route('dashboard'));
     }
 }

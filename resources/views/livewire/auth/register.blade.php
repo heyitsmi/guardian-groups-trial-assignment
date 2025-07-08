@@ -8,37 +8,68 @@
         </p>
     </div>
     <form wire:submit="register">
-        <div class="mb-4">
-            <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-            <input id="name" type="text" wire:model="form.name" required autofocus
-                class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-brand-green focus:border-brand-green sm:text-sm" />
-        </div>
-        <div class="mb-4">
-            <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-            <input id="email" type="email" wire:model="form.email" required
-                class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-brand-green focus:border-brand-green sm:text-sm" />
-        </div>
-        <div class="mb-4">
-            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-            <input id="password" type="password" wire:model="form.password" required
-                class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-brand-green focus:border-brand-green sm:text-sm" />
-        </div>
+        <x-forms.input 
+            label="Full Name" 
+            model="form.name" 
+            required 
+            autofocus 
+        />
+
+        <x-forms.input 
+            label="Email Address" 
+            model="form.email" 
+            type="email" 
+            required 
+        />
+
+        <x-forms.input 
+            label="Password" 
+            model="form.password" 
+            type="password" 
+            required 
+        />
+
+        <x-forms.input 
+            label="Confirm Password" 
+            model="form.password_confirmation" 
+            type="password" 
+            required 
+        />
+
         <div class="mb-6">
             <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
             <input id="password_confirmation" type="password" wire:model="form.password_confirmation" required
-                class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-brand-green focus:border-brand-green sm:text-sm" />
+                   @class([
+                        'mt-1 block w-full px-3 py-2 bg-white border rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm',
+                        'border-gray-300 focus:ring-brand-green focus:border-brand-green' => !$errors->has('form.password_confirmation'),
+                        'border-red-500 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500' => $errors->has('form.password_confirmation'),
+                   ]) />
+             @error('form.password_confirmation')
+                <small class="text-red-500 mt-1">{{ $message }}</small>
+            @enderror   
         </div>
+
         <div>
             <button type="submit"
-                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-semibold text-white bg-brand-green hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-opacity duration-200">
-            Sign Up
+                    wire:loading.attr="disabled"
+                    class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-semibold text-white bg-brand-green hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-opacity duration-200 disabled:opacity-75">
+                <svg wire:loading wire:target="register" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span wire:loading.remove wire:target="register">
+                    Sign Up
+                </span>
+                <span wire:loading wire:target="register">
+                    Signing Up...
+                </span>
             </button>
         </div>
     </form>
     <p class="mt-8 text-center text-sm text-gray-600">
         Already have an account? 
         <a href="{{ route('login') }}" wire:navigate class="font-medium text-brand-green hover:underline">
-        Sign in
+            Sign in
         </a>
     </p>
 </div>
