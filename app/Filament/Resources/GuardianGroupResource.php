@@ -56,7 +56,7 @@ class GuardianGroupResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('group_name')
                     ->searchable(),
-                ImageColumn::make('members.avatar')
+                ImageColumn::make('members.avatar_url')
                     ->circular()
                     ->stacked(),
                 Tables\Columns\TextColumn::make('status')

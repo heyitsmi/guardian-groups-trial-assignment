@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Home;
+use App\Livewire\Profile;
 use App\Livewire\Dashboard;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
@@ -11,6 +12,8 @@ Route::view('/', 'welcome')->name('welcome');
 
 Route::middleware('auth')->group(function(){
     Route::get('dashboard', Dashboard::class)->name('dashboard');
+
+    Route::get('profile',Profile::class)->name('profile');
 
     Route::post('logout', LogoutController::class)->name('logout');
 });

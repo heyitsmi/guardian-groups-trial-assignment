@@ -5,7 +5,9 @@
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
-                        <h1 class="text-xl font-bold text-brand-green">{{ config('app.name') }}</h1>
+                        <a href="{{ route('dashboard') }}" wire:navigate>
+                            <h1 class="text-xl font-bold text-brand-green">{{ config('app.name') }}</h1>
+                        </a>
                     </div>
                 </div>
                 <div class="flex items-center">
@@ -14,7 +16,7 @@
                         <div>
                             <button @click="open = !open" type="button" class="flex items-center max-w-xs bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-green" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="sr-only">Open user menu</span>
-                                <img class="h-8 w-8 rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&color=059669&background=EBF4FF" alt="User Avatar">
+                                <img class="h-8 w-8 rounded-full" src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}">
                                 <span class="hidden sm:block ml-2 mr-3 text-sm font-medium text-gray-700">{{ Auth::user()->name }}</span>
                                 <svg class="hidden sm:block h-5 w-5 text-gray-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -38,7 +40,7 @@
                             tabindex="-1"
                             style="display: none;"
                             >
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                            <a href="{{ route('profile') }}" wire:navigate class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
                             <!-- Logout Form -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Panel;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,6 +24,7 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'avatar'
     ];
 
     /**
@@ -49,15 +51,19 @@ class User extends Authenticatable implements FilamentUser
     }
 
     //appends avatar attribute to the user model
-    protected $appends = ['avatar'];
+    protected $appends = ['avatar_url'];
 
     public function canAccessPanel(Panel $panel): bool
     {
         return str_ends_with($this->email, '@gmail.com') && $this->hasVerifiedEmail();
     }
 
-    public function getAvatarAttribute(): string
+    public function getAvatarUrlAttribute()
     {
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random&size=128';
+        if ($this->avatar) {
+            return Storage::url($this->avatar);
+        }
+    
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=059669&background=EBF4FF';
     }
 }
