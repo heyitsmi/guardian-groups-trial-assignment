@@ -3,4 +3,5 @@
 use App\Livewire\Home;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', Home::class)->name('home');
+Route::view('/', 'welcome')->name('welcome');
+Route::get('home', Home::class)->name('home');

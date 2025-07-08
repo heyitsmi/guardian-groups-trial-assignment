@@ -5,9 +5,64 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* Primary Green: #00B386 */
+.bg-brand-green {
+    background-color: #00B386;
+}
+.text-brand-green {
+    color: #00B386;
+}
+.border-brand-green {
+    border-color: #00B386;
+}
+
+/* Soft Yellow: #FFF9DB */
+.bg-soft-yellow {
+    background-color: #FFF9DB;
+}
+.text-soft-yellow {
+    color: #FFF9DB;
+}
+.border-soft-yellow {
+    border-color: #FFF9DB;
+}
+
+/* Warm Coral: #FF6B6B */
+.bg-warm-coral {
+    background-color: #FF6B6B;
+}
+.text-warm-coral {
+    color: #FF6B6B;
+}
+.border-warm-coral {
+    border-color: #FF6B6B;
+}
+
+/* Sky Blue: #60A5FA */
+.bg-sky-blue {
+    background-color: #60A5FA;
+}
+.text-sky-blue {
+    color: #60A5FA;
+}
+.border-sky-blue {
+    border-color: #60A5FA;
+}
+
+/* Neutral Slate: #64748B */
+.bg-neutral-slate {
+    background-color: #64748B;
+}
+.text-neutral-slate {
+    color: #64748B;
+}
+.border-neutral-slate {
+    border-color: #64748B;
+}
+
+/* Light Gray Background: #F8FAFC */
+.bg-light-gray-bg {
+    background-color: #F8FAFC;
 }
 
 .bg-teal-gradient {
