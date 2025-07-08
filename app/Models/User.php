@@ -48,8 +48,16 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
+    //appends avatar attribute to the user model
+    protected $appends = ['avatar'];
+
     public function canAccessPanel(Panel $panel): bool
     {
         return str_ends_with($this->email, '@gmail.com') && $this->hasVerifiedEmail();
+    }
+
+    public function getAvatarAttribute(): string
+    {
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random&size=128';
     }
 }
