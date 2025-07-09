@@ -4,10 +4,21 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
+                    <!-- Logo -->
                     <div class="flex-shrink-0 flex items-center">
                         <a href="{{ route('dashboard') }}" wire:navigate>
                             <h1 class="text-xl font-bold text-brand-green">{{ config('app.name') }}</h1>
                         </a>
+                    </div>
+
+                    <!-- Main Navigation Links (Visible on Desktop) -->
+                    <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            Dashboard
+                        </x-nav-link>
+                        <x-nav-link :href="route('badges')" :active="request()->routeIs('badges')">
+                            Badges
+                        </x-nav-link>
                     </div>
                 </div>
                 <div class="flex items-center">
@@ -33,24 +44,32 @@
                             x-transition:leave="transition ease-in duration-75" 
                             x-transition:leave-start="transform opacity-100 scale-100" 
                             x-transition:leave-end="transform opacity-0 scale-95" 
-                            class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" 
+                            class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" 
                             role="menu" 
                             aria-orientation="vertical" 
                             aria-labelledby="user-menu-button" 
                             tabindex="-1"
                             style="display: none;"
                             >
-                            <a href="{{ route('profile') }}" wire:navigate class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                            <!-- Mobile Navigation Links -->
+                            <div class="sm:hidden">
+                                <x-dropdown-link :href="route('dashboard')">Dashboard</x-dropdown-link>
+                                <x-dropdown-link :href="route('badges')">Badges</x-dropdown-link>
+                                <div class="border-t border-gray-100 my-1"></div>
+                            </div>
+
+                            <!-- Profile and Logout Links -->
+                            <x-dropdown-link :href="route('profile')">Your Profile</x-dropdown-link>
+                            
                             <!-- Logout Form -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <a href="{{ route('logout') }}" 
                                     onclick="event.preventDefault(); this.closest('form').submit();" 
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
                                     role="menuitem" 
-                                    tabindex="-1" 
-                                    id="user-menu-item-1">
-                                Log Out
+                                    tabindex="-1">
+                                    Log Out
                                 </a>
                             </form>
                         </div>

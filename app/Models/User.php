@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -65,5 +66,10 @@ class User extends Authenticatable implements FilamentUser
         }
     
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=059669&background=EBF4FF';
+    }
+
+    public function groups() :BelongsToMany
+    {
+        return $this->belongsToMany(GuardianGroup::class, 'guardian_group_user')->withTimestamps();
     }
 }
