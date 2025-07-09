@@ -17,4 +17,9 @@ class GuardianGroup extends Model
     {
         return $this->belongsToMany(User::class, 'guardian_group_user')->withTimestamps();
     }
+
+    public function scopeActive($query)
+    {
+        return $query->whereStatus('active');
+    }
 }

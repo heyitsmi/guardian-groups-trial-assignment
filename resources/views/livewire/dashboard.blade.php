@@ -54,6 +54,7 @@
                     </li>
                 </ul>
             </div>
+            @livewire('dashboard.guardian-group-info')
         </div>
         <!-- Sidebar Column -->
         <div class="lg:col-span-1 space-y-8">

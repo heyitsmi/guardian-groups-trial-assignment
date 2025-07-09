@@ -5,22 +5,23 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\GuardianGroup;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class GuardianGroupMemberSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $groups = GuardianGroup::all();
-        $users = User::where('email','!=','admin@gmail.com')->get();
+        $guardianGroupIds = GuardianGroup::pluck('id');
 
-        foreach ($users as $user) {
-            // Randomly assign each user to a group
-            $group = $groups->random();
-            $group->members()->sync($user->id);
+        if ($guardianGroupIds->isEmpty()) {
+            $this->command->info('No Guardian Groups found. Seeding users without assigning them to groups.');
+            User::factory(50)->create();
+            return;
         }
+
+        User::factory(50)->create()->each(function (User $user) use ($guardianGroupIds) {
+            $groupsToJoin = $guardianGroupIds->random(rand(1, min(3, $guardianGroupIds->count())));
+
+            $user->groups()->attach($groupsToJoin);
+        });
     }
 }
