@@ -39,13 +39,8 @@ class Search extends Component
     
     public function render()
     {
-        $groups = GuardianGroup::query()
-            ->withCount('members') 
-            ->active()
-            ->when($this->search, function ($query) {
-                $query->where('group_name', 'like', '%' . $this->search . '%')
-                      ->orWhere('zip_code', 'like', '%' . $this->search . '%');
-            })
+        $groups = GuardianGroup::search($this->search)
+            ->query(fn ($query) => $query->withCount('members'))
             ->paginate(10);
 
         return view('livewire.guardian-groups.search', [
