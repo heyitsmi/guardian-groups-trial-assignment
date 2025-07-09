@@ -18,7 +18,8 @@ class HelpNowModal extends Component
         $this->loadMissions();
     }
 
-    #[On('openHelpModal')]
+    // #[On('openHelpModal')]
+    #[On('open-help-modal')]
     public function open()
     {
         $this->loadMissions();

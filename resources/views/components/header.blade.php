@@ -22,6 +22,9 @@
                         <x-nav-link :href="route('groups.search')" :active="request()->routeIs('groups.search')">
                             Guardian Groups
                         </x-nav-link>
+                        <x-nav-link :href="route('trial')" :active="request()->routeIs('trial')">
+                            Trial
+                        </x-nav-link>
                     </div>
                 </div>
                 <div class="flex items-center">
@@ -59,6 +62,7 @@
                                 <x-dropdown-link :href="route('dashboard')">Dashboard</x-dropdown-link>
                                 <x-dropdown-link :href="route('badges')">Badges</x-dropdown-link>
                                 <x-dropdown-link :href="route('groups.search')">Groups</x-dropdown-link>
+                                <x-dropdown-link :href="route('trial')">Trial</x-dropdown-link>
                                 <div class="border-t border-gray-100 my-1"></div>
                             </div>
 
