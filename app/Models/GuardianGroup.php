@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class GuardianGroup extends Model
 {
+    use Searchable;
+    
     protected $fillable = [
         'zip_code',
         'group_name',
