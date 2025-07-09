@@ -58,10 +58,9 @@
         </div>
         <!-- Sidebar Column -->
         <div class="lg:col-span-1 space-y-8">
-            <!-- Your Impact Summary -->
             @livewire('dashboard.points-counter')
-            <!-- Your Badges Card -->
             @livewire('dashboard.badges-display')
+            @livewire('dashboard.impact-summary')
         </div>
     </div>
 </div>

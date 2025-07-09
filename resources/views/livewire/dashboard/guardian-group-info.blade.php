@@ -1,4 +1,5 @@
 <div class="space-y-8">
+    {{-- This will loop through each group the user is a member of. --}}
     @forelse ($groups as $group)
         <div class="bg-white p-8 rounded-2xl shadow-lg">
             <h3 class="text-2xl font-semibold text-gray-800 flex items-center">
@@ -8,6 +9,7 @@
                 Guardian Group: {{ $group->group_name ?? 'Unnamed Group' }}
             </h3>
 
+            {{-- ZIP Status Section --}}
             <div class="mt-6 p-4 bg-light-gray-bg rounded-lg">
                 <p class="text-lg text-gray-600">
                     Status for ZIP <span class="font-bold text-gray-800">{{ $group->zip_code }}</span>
@@ -18,27 +20,32 @@
                 </p>
             </div>
 
+            {{-- Group Members Section --}}
             <div class="mt-6">
                 <h4 class="font-semibold text-gray-700">Group Members:</h4>
-                <div class="mt-3 flex flex-wrap gap-4">
-                    @foreach ($group->members as $member)
-                        <div class="flex items-center" title="{{ $member->name }}">
-                            <img class="h-10 w-10 rounded-full object-cover" src="{{ $member->avatar_url }}" alt="{{ $member->name }}">
-                            <span class="ml-2 text-sm text-gray-600 hidden sm:inline">{{ $member->name }}</span>
-                        </div>
+                <div class="mt-3 flex items-center">
+                    {{-- Loop through the first 10 members to display their avatars --}}
+                    @foreach ($group->members->take(10) as $member)
+                        <img class="h-10 w-10 rounded-full object-cover border-2 border-white -ml-2" src="{{ $member->avatar_url }}" alt="{{ $member->name }}" title="{{ $member->name }}">
                     @endforeach
+
+                    {{-- If there are more than 10 members, show an overflow indicator --}}
+                    @if ($group->members->count() > 10)
+                        <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-xs font-semibold text-gray-600 border-2 border-white -ml-2" title="{{ $group->members->count() - 10 }} more members">
+                            +{{ $group->members->count() - 10 }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
     @empty
+        {{-- This message shows if the user is not part of any group yet. --}}
         <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
             <h3 class="text-2xl font-semibold text-gray-800">Join a Guardian Group</h3>
             <p class="mt-2 text-neutral-slate">You are not part of any Guardian Group yet. Find a group in your area to start collaborating!</p>
-            <div class="mt-6">
-                <a href="{{ route('groups.search') }}" wire:navigate class="mt-6 bg-brand-green cursor-pointer text-white font-bold py-3 px-6 rounded-full shadow-md hover:opacity-90 transition-opacity">
-                    Find a Group
-                </a>
-            </div>
+            <a href="{{ route('groups.search') }}" wire:navigate class="mt-6 inline-block bg-brand-green text-white font-bold py-3 px-6 rounded-full shadow-md hover:opacity-90 transition-opacity">
+                Find a Group
+            </a>
         </div>
     @endforelse
 </div>

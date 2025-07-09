@@ -49,6 +49,10 @@ class HelpNowModal extends Component
 
         $user->addPoints($pointsEarned);
 
+        foreach ($user->groups as $group) {
+            $group->increment('people_helped_count');
+        }
+
         $this->awardBadges($user);
         
         session()->flash('task_completed_message', 'Thank you for your help! You\'ve earned 10 points.');
