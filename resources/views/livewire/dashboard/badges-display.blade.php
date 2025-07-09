@@ -11,12 +11,5 @@
             <p class="text-sm text-gray-500 col-span-full">You haven't earned any badges yet. Keep helping to unlock them!</p>
         @endforelse
 
-        @if($badges->count() < 4)
-            <div class="flex flex-col items-center w-16 opacity-50">
-                <span class="text-6xl text-gray-300" title="Coming Soon">?</span>
-                <span class="text-xs mt-1 text-gray-400">Locked</span>
-            </div>
-        @endif
-
     </div>
 </div>

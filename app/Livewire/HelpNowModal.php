@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Badge;
-use App\Models\Mission; // Import the Mission model
+use App\Models\Mission;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +18,6 @@ class HelpNowModal extends Component
         $this->loadMissions();
     }
 
-    // #[On('openHelpModal')]
     #[On('open-help-modal')]
     public function open()
     {
@@ -55,19 +54,24 @@ class HelpNowModal extends Component
         }
 
         $user->completedMissions()->attach($missionId);
-
         $user->addPoints($mission->points_reward);
 
         foreach ($user->groups as $group) {
             $group->increment('people_helped_count');
         }
-
-        $this->awardBadges($user);
-
-        session()->flash('task_completed_message', 'Mission completed! You\'ve earned ' . $mission->points_reward . ' points.');
         
         $this->close();
+        
+        // Dispatch the success toast event to the browser.
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => 'Mission completed! You\'ve earned ' . $mission->points_reward . ' points.'
+        ]);
 
+        // Check for new badges and dispatch a separate toast if earned.
+        $this->awardBadges($user);
+
+        // Dispatch an event to update other Livewire components.
         $this->dispatch('taskCompleted');
     }
 
@@ -86,7 +90,11 @@ class HelpNowModal extends Component
         if ($newBadges->isNotEmpty()) {
             $user->badges()->attach($newBadges->pluck('id'));
             $badgeNames = $newBadges->pluck('name')->implode(', ');
-            session()->flash('new_badge_message', 'Congratulations! You have earned a new badge: ' . $badgeNames);
+            
+            $this->dispatch('show-toast', [
+                'type' => 'success',
+                'message' => '🎉 New Badge Unlocked: ' . $badgeNames
+            ]);
         }
     }
 
