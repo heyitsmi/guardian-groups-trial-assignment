@@ -79,4 +79,9 @@ class User extends Authenticatable implements FilamentUser
         $this->points += $amount;
         $this->save();
     }
+
+    public function badges(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
 }

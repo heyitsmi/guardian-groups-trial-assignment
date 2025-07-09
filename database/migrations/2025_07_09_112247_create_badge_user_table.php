@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('badges', function (Blueprint $table) {
+        Schema::create('badge_user', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('icon')->nullable();
-            $table->string('short_description');
-            $table->unsignedInteger('required_points')->default(0)->comment('Points needed to earn this badge.');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('badge_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+            $table->unique(['user_id', 'badge_id']);
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('badges');
+        Schema::dropIfExists('badge_user');
     }
 };
