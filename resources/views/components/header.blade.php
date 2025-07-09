@@ -27,13 +27,21 @@
                         </x-nav-link>
                     </div>
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center space-x-4">
+                    <!-- Search Button -->
+                    <button @click="$dispatch('open-search-modal')" class="p-2 cursor-pointer rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-none" aria-label="Search">
+                        <span class="sr-only">Search</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                    </button>
+
                     <!-- User Dropdown Menu -->
-                    <div x-data="{ open: false }" class="relative ml-3">
+                    <div x-data="{ open: false }" class="relative">
                         <div>
                             <button @click="open = !open" type="button" class="flex cursor-pointer items-center max-w-xs bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-green" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="sr-only">Open user menu</span>
-                                <img class="h-8 w-8 rounded-full" src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}">
+                                <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}">
                                 <span class="hidden sm:block ml-2 mr-3 text-sm font-medium text-gray-700">{{ Auth::user()->name }}</span>
                                 <svg class="hidden sm:block h-5 w-5 text-gray-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -51,11 +59,11 @@
                             x-transition:leave-start="transform opacity-100 scale-100" 
                             x-transition:leave-end="transform opacity-0 scale-95" 
                             class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" 
+                            style="display: none;"
                             role="menu" 
                             aria-orientation="vertical" 
                             aria-labelledby="user-menu-button" 
                             tabindex="-1"
-                            style="display: none;"
                             >
                             <!-- Mobile Navigation Links -->
                             <div class="sm:hidden">
@@ -69,7 +77,6 @@
                             <!-- Profile and Logout Links -->
                             <x-dropdown-link :href="route('profile')">Your Profile</x-dropdown-link>
                             
-                            <!-- Logout Form -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <a href="{{ route('logout') }}" 
@@ -86,4 +93,5 @@
             </div>
         </div>
     </nav>
+    @livewire('search-modal')
 </div>
