@@ -25,7 +25,7 @@
                     <!-- User Dropdown Menu -->
                     <div x-data="{ open: false }" class="relative ml-3">
                         <div>
-                            <button @click="open = !open" type="button" class="flex items-center max-w-xs bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-green" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                            <button @click="open = !open" type="button" class="flex cursor-pointer items-center max-w-xs bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-green" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="sr-only">Open user menu</span>
                                 <img class="h-8 w-8 rounded-full" src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}">
                                 <span class="hidden sm:block ml-2 mr-3 text-sm font-medium text-gray-700">{{ Auth::user()->name }}</span>

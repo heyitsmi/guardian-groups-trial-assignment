@@ -6,6 +6,7 @@
         <p>{{ session('task_completed_message') }}</p>
     </div>
     @endif
+    @livewire('help-now-modal')
     <!-- Dashboard Grid Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Main Content Column -->
@@ -51,13 +52,7 @@
         <!-- Sidebar Column -->
         <div class="lg:col-span-1 space-y-8">
             <!-- Your Impact Summary -->
-            <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
-                <p class="text-xl font-medium text-neutral-slate">Your Impact</p>
-                <div class="mt-4">
-                    <p class="text-7xl font-bold text-brand-green">1,250</p>
-                    <p class="text-lg text-gray-600">Points Earned</p>
-                </div>
-            </div>
+            @livewire('dashboard.points-counter')
             <!-- Your Badges Card -->
             <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
                 <p class="text-xl font-medium text-neutral-slate">Your Badges</p>

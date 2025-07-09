@@ -25,7 +25,8 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
-        'avatar'
+        'avatar',
+        'points'
     ];
 
     /**
@@ -71,5 +72,11 @@ class User extends Authenticatable implements FilamentUser
     public function groups() :BelongsToMany
     {
         return $this->belongsToMany(GuardianGroup::class, 'guardian_group_user')->withTimestamps();
+    }
+
+    public function addPoints(int $amount) :void
+    {
+        $this->points += $amount;
+        $this->save();
     }
 }

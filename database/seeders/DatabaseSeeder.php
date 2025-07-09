@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             GuardianGroupSeeder::class,
+            GuardianGroupMemberSeeder::class,
+            BadgeSeeder::class
         ]);
     }
 }

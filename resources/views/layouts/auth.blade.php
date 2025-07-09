@@ -7,7 +7,7 @@
         <!-- Styles & Scripts (Vite) -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="antialiased bg-light-gray-bg">
+    <body class="font-sans antialiased bg-light-gray-bg">
         <div class="blob-container">
             <div class="blob blob-1"></div>
             <div class="blob blob-2"></div>

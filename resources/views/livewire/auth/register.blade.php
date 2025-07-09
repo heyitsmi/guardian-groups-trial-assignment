@@ -36,19 +36,6 @@
             required 
         />
 
-        <div class="mb-6">
-            <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-            <input id="password_confirmation" type="password" wire:model="form.password_confirmation" required
-                   @class([
-                        'mt-1 block w-full px-3 py-2 bg-white border rounded-md shadow-sm placeholder-gray-400 focus:outline-none sm:text-sm',
-                        'border-gray-300 focus:ring-brand-green focus:border-brand-green' => !$errors->has('form.password_confirmation'),
-                        'border-red-500 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500' => $errors->has('form.password_confirmation'),
-                   ]) />
-             @error('form.password_confirmation')
-                <small class="text-red-500 mt-1">{{ $message }}</small>
-            @enderror   
-        </div>
-
         <div>
             <button type="submit"
                     wire:loading.attr="disabled"
