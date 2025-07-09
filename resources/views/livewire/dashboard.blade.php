@@ -1,11 +1,4 @@
 <div>
-    <!-- Success Message Area -->
-    @if (session()->has('task_completed_message'))
-    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg mb-8" role="alert">
-        <p class="font-bold">Success!</p>
-        <p>{{ session('task_completed_message') }}</p>
-    </div>
-    @endif
     @livewire('help-now-modal')
     <!-- Dashboard Grid Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -18,6 +11,19 @@
                 </h1>
                 <p class="mt-2 text-xl text-neutral-slate">It's great to see you. Ready to make a difference?</p>
             </header>
+            @if (session()->has('task_completed_message'))
+                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg mb-8" role="alert">
+                    <p class="font-bold">Success!</p>
+                    <p>{{ session('task_completed_message') }}</p>
+                </div>
+            @endif
+
+            @if (session()->has('new_badge_message'))
+                <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-lg mb-8" role="alert">
+                    <p class="font-bold">🎉 New Badge Unlocked! 🎉</p>
+                    <p>{{ session('new_badge_message') }}</p>
+                </div>
+            @endif
             <!-- Main Action Card: "I Can Help Right Now" -->
             <div class="bg-brand-green text-white p-8 rounded-2xl shadow-lg text-center transform hover:scale-[1.02] transition-transform duration-300 card-glow">
                 <h2 class="text-3xl font-bold">I Can Help Right Now</h2>
@@ -54,23 +60,7 @@
             <!-- Your Impact Summary -->
             @livewire('dashboard.points-counter')
             <!-- Your Badges Card -->
-            <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
-                <p class="text-xl font-medium text-neutral-slate">Your Badges</p>
-                <div class="mt-5 flex justify-center space-x-4">
-                    <div class="flex flex-col items-center">
-                        <span class="text-6xl" title="First Mission">🌟</span>
-                        <span class="text-xs mt-1 text-gray-500">First Mission</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <span class="text-6xl" title="Community Helper">🤝</span>
-                        <span class="text-xs mt-1 text-gray-500">Helper</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <span class="text-6xl text-gray-300" title="Coming Soon">?</span>
-                        <span class="text-xs mt-1 text-gray-400">Locked</span>
-                    </div>
-                </div>
-            </div>
+            @livewire('dashboard.badges-display')
         </div>
     </div>
 </div>

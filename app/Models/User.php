@@ -82,6 +82,6 @@ class User extends Authenticatable implements FilamentUser
 
     public function badges(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(Badge::class)->withTimestamps();
     }
 }

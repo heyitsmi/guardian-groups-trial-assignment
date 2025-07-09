@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Badge as BadgeModel;
 
 class HelpNowModal extends Component
 {
@@ -43,14 +44,38 @@ class HelpNowModal extends Component
 
     public function completeTask($taskId)
     {
-        Auth::user()->addPoints(10); 
+        $user = Auth::user();
+        $pointsEarned = 10; 
 
-        session()->flash('task_completed_message', 'Thank you for your help! You\'ve earned 10 points.');
+        $user->addPoints($pointsEarned);
+
+        $this->awardBadges($user);
         
+        session()->flash('task_completed_message', 'Thank you for your help! You\'ve earned 10 points.');
+
         $this->close();
 
         $this->dispatch('taskCompleted');
     }
+
+    protected function awardBadges($user)
+    {
+        $currentPoints = $user->fresh()->points;
+
+        $currentUserBadgeIds = $user->badges()->pluck('badges.id')->toArray();
+
+        $newBadges = BadgeModel::where('required_points', '<=', $currentPoints)
+                          ->whereNotIn('id', $currentUserBadgeIds)
+                          ->get();
+
+        if ($newBadges->isNotEmpty()) {
+            $user->badges()->attach($newBadges->pluck('id'));
+
+            $badgeNames = $newBadges->pluck('name')->implode(', ');
+            session()->flash('new_badge_message', 'Congratulations! You have earned a new badge: ' . $badgeNames);
+        }
+    }
+
 
     public function render()
     {
