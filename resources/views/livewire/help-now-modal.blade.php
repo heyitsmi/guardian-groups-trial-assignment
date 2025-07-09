@@ -12,7 +12,6 @@
             x-transition:leave-end="opacity-0"
             @keydown.escape.window="show = false"
         >
-
             <div 
                 class="bg-white w-full max-w-2xl mx-4 sm:mx-0 rounded-2xl shadow-xl p-8 transform transition-all"
                 x-show="show"
@@ -37,23 +36,25 @@
                     <p class="text-neutral-slate mb-6">Pick one of these small tasks to quickly make a big impact. Thank you for being here!</p>
                     
                     <ul class="space-y-4">
-                        @forelse ($tasks as $task)
+                        {{-- Loop through real missions from the database --}}
+                        @forelse ($missions as $mission)
                             <li class="p-4 bg-light-gray-bg rounded-lg flex items-center justify-between hover:bg-gray-200 transition-colors">
                                 <div class="flex items-center">
-                                    <span class="text-3xl mr-4">{{ $task['icon'] }}</span>
+                                    <span class="text-3xl mr-4">{{ $mission->icon }}</span>
                                     <div>
-                                        <h3 class="font-semibold text-gray-800">{{ $task['title'] }}</h3>
-                                        <p class="text-sm text-gray-600">{{ $task['description'] }}</p>
+                                        <h3 class="font-semibold text-gray-800">{{ $mission->title }}</h3>
+                                        <p class="text-sm text-gray-600">{{ $mission->description }}</p>
                                     </div>
                                 </div>
                                 <button 
-                                    wire:click="completeTask({{ $task['id'] }})"
+                                    wire:click="completeMission({{ $mission->id }})"
+                                    wire:loading.attr="disabled"
                                     class="ml-4 bg-brand-green text-white cursor-pointer font-bold py-2 px-4 rounded-lg shadow-md hover:opacity-90 transition-opacity text-sm whitespace-nowrap">
                                     Help Now
                                 </button>
                             </li>
                         @empty
-                            <li class="text-center text-gray-500 py-4">No tasks available right now. Please check back later!</li>
+                            <li class="text-center text-gray-500 py-4">No new missions available right now. Great job clearing the board!</li>
                         @endforelse
                     </ul>
                 </div>

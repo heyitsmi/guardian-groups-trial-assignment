@@ -23,7 +23,7 @@
                 </p>
                 <div class="mt-8">
                     @auth
-                    <a href="#"
+                    <a wire:navigate href="{{ route('dashboard') }}"
                         class="inline-block rounded-md bg-brand-green px-8 py-4 text-lg font-semibold text-white shadow-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-opacity duration-200">
                     Go to Your Dashboard
                     </a>

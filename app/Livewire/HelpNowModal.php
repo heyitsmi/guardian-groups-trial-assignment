@@ -2,25 +2,26 @@
 
 namespace App\Livewire;
 
+use App\Models\Badge;
+use App\Models\Mission; // Import the Mission model
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Badge as BadgeModel;
 
 class HelpNowModal extends Component
 {
     public bool $showModal = false;
-    public array $tasks = [];
+    public $missions = [];
     
     public function mount()
     {
-        $this->loadTasks();
+        $this->loadMissions();
     }
 
     #[On('openHelpModal')]
     public function open()
     {
-        $this->loadTasks();
+        $this->loadMissions();
         $this->showModal = true;
     }
 
@@ -29,57 +30,64 @@ class HelpNowModal extends Component
         $this->showModal = false;
     }
 
-    public function loadTasks()
-    {
-        $allTasks = [
-            ['id' => 1, 'icon' => '💬', 'title' => 'Answer an Unanswered Question', 'description' => 'Find a question in the forums that has no replies yet and share your knowledge.'],
-            ['id' => 2, 'icon' => '👋', 'title' => 'Welcome a New User', 'description' => 'Visit the introductions thread and leave a welcoming comment for a new member.'],
-            ['id' => 3, 'icon' => '✍️', 'title' => 'Review a Resource Entry', 'description' => 'Help us keep our information accurate by reviewing a resource page for outdated links.'],
-            ['id' => 4, 'icon' => '❤️', 'title' => 'React to a Lonely Thread', 'description' => 'Find a post in the "Anybody There?" category and give it a supportive reaction.'],
-        ];
-
-        shuffle($allTasks);
-        $this->tasks = array_slice($allTasks, 0, 3);
-    }
-
-    public function completeTask($taskId)
+    public function loadMissions()
     {
         $user = Auth::user();
-        $pointsEarned = 10; 
+        $completedMissionIds = $user->completedMissions()->pluck('missions.id')->toArray();
 
-        $user->addPoints($pointsEarned);
+        $this->missions = Mission::whereNotIn('id', $completedMissionIds)
+                                 ->inRandomOrder()
+                                 ->take(3)
+                                 ->get();
+    }
+
+    /**
+     * Method triggered when a user completes a mission.
+     */
+    public function completeMission(int $missionId)
+    {
+        $user = Auth::user();
+        $mission = Mission::find($missionId);
+
+        if (!$mission) {
+            return;
+        }
+
+        $user->completedMissions()->attach($missionId);
+
+        $user->addPoints($mission->points_reward);
 
         foreach ($user->groups as $group) {
             $group->increment('people_helped_count');
         }
 
         $this->awardBadges($user);
-        
-        session()->flash('task_completed_message', 'Thank you for your help! You\'ve earned 10 points.');
 
+        session()->flash('task_completed_message', 'Mission completed! You\'ve earned ' . $mission->points_reward . ' points.');
+        
         $this->close();
 
         $this->dispatch('taskCompleted');
     }
 
+    /**
+     * Checks for and awards new badges to the user based on their points.
+     */
     protected function awardBadges($user)
     {
         $currentPoints = $user->fresh()->points;
-
         $currentUserBadgeIds = $user->badges()->pluck('badges.id')->toArray();
 
-        $newBadges = BadgeModel::where('required_points', '<=', $currentPoints)
+        $newBadges = Badge::where('required_points', '<=', $currentPoints)
                           ->whereNotIn('id', $currentUserBadgeIds)
                           ->get();
 
         if ($newBadges->isNotEmpty()) {
             $user->badges()->attach($newBadges->pluck('id'));
-
             $badgeNames = $newBadges->pluck('name')->implode(', ');
             session()->flash('new_badge_message', 'Congratulations! You have earned a new badge: ' . $badgeNames);
         }
     }
-
 
     public function render()
     {

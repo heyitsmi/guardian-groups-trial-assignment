@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             GuardianGroupSeeder::class,
             GuardianGroupMemberSeeder::class,
-            BadgeSeeder::class
+            BadgeSeeder::class,
+            MissionSeeder::class
         ]);
     }
 }
