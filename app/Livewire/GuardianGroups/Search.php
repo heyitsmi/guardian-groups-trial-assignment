@@ -32,7 +32,10 @@ class Search extends Component
 
         $user->groups()->attach($groupId);
 
-        session()->flash('status', 'Successfully joined the group!');
+        $this->dispatch('show-toast', [
+            'type' => 'success',
+            'message' => 'Successfully joined the group!'
+        ]);
         
         return $this->redirect(route('dashboard'), navigate: true);
     }

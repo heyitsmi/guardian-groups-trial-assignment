@@ -1,7 +1,7 @@
 <div>
     @if ($showModal)
         <div 
-            class="fixed inset-0 bg-gray-900/50 backdrop-blur-lg flex justify-start z-50 pt-20"
+            class="fixed inset-0 bg-gray-900/50 backdrop-blur-lg flex items-center justify-center z-50"
             x-data="{ show: @entangle('showModal') }"
             x-show="show"
             x-transition:enter="ease-out duration-300"
@@ -55,7 +55,7 @@
                                         @else
                                             <button 
                                                 wire:click="joinGroup({{ $group->id }})"
-                                                class="bg-brand-green text-white font-bold py-1 px-3 rounded-md text-sm hover:opacity-90">
+                                                class="bg-brand-green cursor-pointer text-white font-bold py-1 px-3 rounded-md text-sm hover:opacity-90">
                                                 Join
                                             </button>
                                         @endif

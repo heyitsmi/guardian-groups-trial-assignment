@@ -17,7 +17,6 @@ class SearchModal extends Component
     #[On('open-search-modal')]
     public function open()
     {
-        \Log::info('test');
         $this->showModal = true;
         $this->userGroupIds = Auth::user()->groups()->pluck('guardian_groups.id')->toArray();
     }

@@ -48,29 +48,38 @@ class HelpNowModal extends Component
     {
         $user = Auth::user();
         $mission = Mission::find($missionId);
-
+    
         if (!$mission) {
             return;
         }
-
+    
         $user->completedMissions()->attach($missionId);
         $user->addPoints($mission->points_reward);
-
+    
         foreach ($user->groups as $group) {
             $group->increment('people_helped_count');
         }
         
         $this->close();
         
-        // Dispatch the success toast event to the browser.
-        $this->dispatch('show-toast', [
-            'type' => 'success',
-            'message' => 'Mission completed! You\'ve earned ' . $mission->points_reward . ' points.'
-        ]);
-
-        // Check for new badges and dispatch a separate toast if earned.
-        $this->awardBadges($user);
-
+        // Check for a new badge and get the message
+        $badgeMessage = $this->awardBadges($user);
+    
+        // If a new badge was awarded, show the badge toast
+        if ($badgeMessage) {
+            $this->dispatch('show-toast', [
+                'type' => 'success',
+                'message' => $badgeMessage
+            ]);
+        } 
+        // Otherwise, show the default mission completion toast
+        else {
+            $this->dispatch('show-toast', [
+                'type' => 'success',
+                'message' => 'Mission completed! You\'ve earned ' . $mission->points_reward . ' points.'
+            ]);
+        }
+    
         // Dispatch an event to update other Livewire components.
         $this->dispatch('taskCompleted');
     }
@@ -78,24 +87,22 @@ class HelpNowModal extends Component
     /**
      * Checks for and awards new badges to the user based on their points.
      */
-    protected function awardBadges($user)
+    protected function awardBadges($user): ?string
     {
         $currentPoints = $user->fresh()->points;
         $currentUserBadgeIds = $user->badges()->pluck('badges.id')->toArray();
-
+    
         $newBadges = Badge::where('required_points', '<=', $currentPoints)
                           ->whereNotIn('id', $currentUserBadgeIds)
                           ->get();
-
+    
         if ($newBadges->isNotEmpty()) {
             $user->badges()->attach($newBadges->pluck('id'));
             $badgeNames = $newBadges->pluck('name')->implode(', ');
-            
-            $this->dispatch('show-toast', [
-                'type' => 'success',
-                'message' => '🎉 New Badge Unlocked: ' . $badgeNames
-            ]);
+    
+            return '🎉 New Badge Unlocked: ' . $badgeNames;
         }
+        return null;
     }
 
     public function render()

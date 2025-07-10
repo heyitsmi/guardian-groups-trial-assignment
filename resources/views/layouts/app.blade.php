@@ -20,6 +20,7 @@
             </main>
         </div>
         <x-toast />
+        @livewire('search-modal')
         @livewireScripts
     </body>
 </html>

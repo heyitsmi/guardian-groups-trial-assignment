@@ -1,61 +1,125 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# **Dr. Ed's Community Corps \- Trial Assignment**
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Welcome\! This repository contains the completed trial assignment for the Dr. Ed's Community Corps platform. This project demonstrates a robust implementation of a gamified community support system built on the TALL stack, with additional integrations as requested.
 
-## About Laravel
+## **✨ Key Features Implemented**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project successfully implements the core requirements of the trial assignment and goes beyond by building a fully dynamic and interactive user experience.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* **Dynamic User Dashboard:** A modern, user-friendly dashboard that serves as the central hub for user activity. It includes real-time updates for:  
+  * Points Counter  
+  * Team Impact Summary  
+  * Earned Badges Display  
+  * Available Missions  
+  * Guardian Group Information  
+* **"I Can Help Right Now" System:**  
+  * A **Floating Action Button** with rotating, encouraging labels to drive engagement, exactly as specified in the success criteria.  
+  * A **dynamic modal** that fetches and displays available missions from the database.  
+* **Gamification Engine:**  
+  * **Points System:** Users earn points for completing missions.  
+  * **Badges System:** Badges are automatically awarded to users when they reach specific point milestones.  
+  * **Missions System:** A backend system for creating and managing missions that users can complete.  
+* **Guardian Groups & Search:**  
+  * Users can join and view members of multiple Guardian Groups.  
+  * A fast, modern **search modal** powered by **Laravel Scout and Meilisearch** allows users to find and join groups instantly.  
+* **Full User Lifecycle:**  
+  * Custom-styled pages for **Login** and **Registration**.  
+  * A comprehensive **User Profile** page where users can update their name, email, password, and upload a profile photo with a live preview.  
+* **Reusable Components:** The project is built with clean, reusable Blade components for UI elements like form inputs and navigation links, demonstrating best practices for maintainability.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## **🛠️ Tech Stack**
 
-## Learning Laravel
+This project is built with a modern and efficient tech stack:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* **Backend:** Laravel 12 
+* **Frontend:** Tailwind CSS v4, Alpine.js  
+* **Full-Stack Interactivity:** Livewire 3  
+* **Admin Panel:** Filament 3  
+* **Search:** Laravel Scout \+ Meilisearch  
+* **Debugging:** Laravel Debugbar
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## **🚀 Local Setup Instructions**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Please follow these steps to get the project running on your local machine.
 
-## Laravel Sponsors
+### **Prerequisites**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+* PHP 8.2 or higher  
+* Composer  
+* Node.js & npm  
+* A running instance of **Meilisearch**. (You can download it from the [official website](https://www.google.com/search?q=https://www.meilisearch.com/docs/learn/getting_started/installation) or use Docker).  
+* A database (e.g., MySQL, PostgreSQL).
 
-### Premium Partners
+### **Step-by-Step Installation**
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1. **Clone the Repository**  
+   git clone https://github.com/heyitsmi/guardian-groups-trial-assignment  
+   cd guardian-groups-trial-assignment
 
-## Contributing
+2. **Install Dependencies**  
+   composer install  
+   npm install
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. **Environment Setup**  
+   * Copy the example environment file:  
+     cp .env.example .env
 
-## Code of Conduct
+   * Open the .env file and configure your database connection (DB\_HOST, DB\_PORT, DB\_DATABASE, DB\_USERNAME, DB\_PASSWORD).  
+   * Add the Meilisearch configuration:  
+     SCOUT\_DRIVER=meilisearch  
+     MEILISEARCH\_HOST=http://127.0.0.1:7700  
+     MEILISEARCH\_KEY=masterKey
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. **Generate Application Key**  
+   php artisan key:generate
 
-## Security Vulnerabilities
+5. **Run Meilisearch**  
+   * Make sure your Meilisearch instance is running. If you downloaded the executable, run it in a separate terminal window:  
+     .\\meilisearch.exe
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6. **Run Migrations and Seeders**  
+   * This command will set up the database schema and populate it with sample data (users, groups, badges, missions).  
+     php artisan migrate:fresh \--seed
 
-## License
+7. **Import Data to Meilisearch**  
+   * This command will index your GuardianGroup data so it becomes searchable.  
+     php artisan scout:import "App\\Models\\GuardianGroup"
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+8. **Run the Development Servers**  
+   * You'll need two terminal windows for this.  
+   * In the first terminal, run the Vite server for frontend assets:  
+     npm run dev
+
+   * In the second terminal, run the Laravel development server:  
+     php artisan serve
+
+The application should now be running at http://127.0.0.1:8000.
+
+## **👤 How to Use**
+
+### **User Credentials**
+
+The database seeder creates 50 random users. You can use the following credentials to log in as a test user:
+
+* **Email:** test@example.com  
+* **Password:** password
+
+### **Admin Panel**
+
+The project includes a Filament admin panel to manage resources.
+
+* **URL:** http://127.0.0.1:8000/admin  
+* **Admin Email:** admin@example.com  
+* **Admin Password:** password
+
+### **Key Features to Test**
+
+1. **Login/Register:** Test the authentication flow.  
+2. **Dashboard:** After logging in, explore the dynamic dashboard.  
+3. **Floating Help Button:** Click the floating button in the bottom-right corner.  
+4. **Complete a Mission:** In the modal, click "Help Now" on a mission. Observe the toast notification and the real-time updates on the **Points**, **Badges**, and **Impact Summary** widgets.  
+5. **Search for a Group:** Click the search icon in the header to open the search modal. Type a ZIP code or group name to see instant results from Meilisearch.  
+6. **Join a Group:** Join a new group from the search modal and see the "Guardian Group Info" card appear or update on your dashboard.  
+7. **Profile Page:** Navigate to your profile from the user dropdown to update your information and profile picture.
+
+Thank you for the opportunity. I look forward to your feedback\!

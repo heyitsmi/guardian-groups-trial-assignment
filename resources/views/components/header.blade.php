@@ -1,4 +1,4 @@
-<div>
+<div x-data>
     <!-- Navigation Header -->
     <nav class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
